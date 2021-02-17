@@ -50,7 +50,7 @@ sudo apt-get install -y google-chrome-stable
 sudo git config --global credential.helper store
 
 # mysql
-sudo apt-get install libmysqlclient-dev
+sudo apt-get install -y libmysqlclient-dev
 sudo apt-get install -y mysql-server
 sudo apt-get install -y mysql-client
 sudo usermod -d /var/lib/mysql mysql
