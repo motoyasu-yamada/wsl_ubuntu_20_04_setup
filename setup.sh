@@ -1,5 +1,5 @@
 sudo apt-get -y update
-sudo apt-get install ruby
+sudo apt-get install -y ruby
 
 sudo apt-get install -y apt-utils 
 sudo apt-get install -y build-essential
