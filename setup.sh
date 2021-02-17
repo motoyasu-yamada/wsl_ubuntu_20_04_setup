@@ -65,4 +65,4 @@ sudo mysql_tzinfo_to_sql /usr/share/zoneinfo/ | sudo mysql -u root mysql
 
 # sqlite3
 sudo apt-get install -y sqlite3
-sudo apt-get install libsqlite3-dev
+sudo apt-get install -y libsqlite3-dev
