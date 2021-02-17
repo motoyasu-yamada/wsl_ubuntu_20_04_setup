@@ -18,27 +18,17 @@ sudo echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/s
 sudo apt-get update 
 sudo apt-get -y install yarn
 
-# rbenv
-export RBENV_ROOT=/usr/local/rbenv
-export PATH=$RBENV_ROOT/bin:$PATH
-sudo /bin/bash -c "echo 'export PATH=/usr/local/rbenv/bin:$PATH' >> /etc/profile"
-sudo apt-get remove rbenv
-sudo git clone https://github.com/rbenv/rbenv.git $RBENV_ROOT
-sudo /bin/bash -c "echo 'eval "$(/usr/local/rbenv/bin/rbenv init -)"' >> /etc/profile"
-sudo -s 'eval "$(/usr/local/rbenv/bin/rbenv init -)"'
-sudo mkdir -p $RBENV_ROOT/plugins
-sudo git clone https://github.com/rbenv/ruby-build.git $RBENV_ROOT/plugins/ruby-build
-
-# nodeenv
-export NODENV_ROOT=/usr/local/nodenv
-export PATH=$NODENV_ROOT/bin:$PATH
-sudo /bin/bash -c "echo 'export PATH=/usr/local/nodenv/bin:$PATH' >> /etc/profile"
-sudo apt-get remove nodeenv
-sudo git clone https://github.com/OiNutter/nodenv /usr/local/nodenv
-sudo /bin/bash -c "echo 'eval \"$(/usr/local/nodenv/bin/nodenv init -)\"' >> /etc/profile"
-sudo -s 'eval "$(/usr/local/nodenv/bin/nodenv init -)"'
-sudo mkdir -p $NODENV_ROOT/plugins
-sudo git clone https://github.com/OiNutter/node-build $NODENV_ROOT/plugins/node-build
+# anyenv /rbenv nodenv
+sudo git clone https://github.com/riywo/anyenv ~/.anyenv
+sudo mv ~/.anyenv /usr/local/anyenv
+cat <<'EOS' > /tmp/.add_etc_profile
+export PATH="/usr/local/anyenv/bin:$PATH"
+eval "$(anyenv init -)"
+EOS
+sudo /bin/bash -c "cat /tmp/.add_etc_profile >> /etc/profile"
+sudo anyenv install --init
+sudo anyenv install nodenv
+sudo anyenv install rbenv
 
 # Google chrome
 sudo /bin/bash -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
