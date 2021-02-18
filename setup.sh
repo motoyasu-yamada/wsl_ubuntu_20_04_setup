@@ -25,10 +25,10 @@ cat <<'EOS' > /tmp/.add_etc_profile
 export PATH="/usr/local/anyenv/bin:$PATH"
 eval "$(anyenv init -)"
 EOS
-sudo /bin/bash -c "cat /tmp/.add_etc_profile >> /etc/profile"
-sudo anyenv install --init
-sudo anyenv install nodenv
-sudo anyenv install rbenv
+sudo /bin/bash -c "cat /tmp/.add_etc_profile >> ~/.bash_profile"
+anyenv install --init
+anyenv install nodenv
+anyenv install rbenv
 
 # Google chrome
 sudo /bin/bash -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
@@ -37,7 +37,7 @@ sudo apt-get -y update
 sudo apt-get install -y google-chrome-stable
 
 # etc
-sudo git config --global credential.helper store
+sudo /bin/bash -c "echo 'git config --global credential.helper store' >> /etc/profile"
 
 # mysql
 sudo apt-get install -y libmysqlclient-dev
@@ -48,6 +48,7 @@ sudo service mysql start
 sudo mysql << EOS
 USE mysql;
 UPDATE user SET plugin='mysql_native_password' WHERE User='root';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
 FLUSH PRIVILEGES;
 EOS
 
