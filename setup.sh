@@ -1,4 +1,8 @@
+set -xe
+sudo add-apt-repository ppa:git-core/ppa
 sudo apt-get -y update
+sudo apt-get -y upgrade
+
 sudo apt-get install -y apt-utils 
 sudo apt-get install -y build-essential
 sudo apt-get install -y git-core 
@@ -19,13 +23,22 @@ sudo apt-get update
 sudo apt-get -y install yarn
 
 # anyenv /rbenv nodenv
+sudo rm -rf ~/.anyenv
+sudo rm -rf ~/.config/anyenv/
+sudo rm -rf /usr/local/anyenv
 sudo git clone https://github.com/riywo/anyenv ~/.anyenv
 sudo mv ~/.anyenv /usr/local/anyenv
 cat <<'EOS' > /tmp/.add_etc_profile
-export PATH="/usr/local/anyenv/bin:$PATH"
+if [[ ":$PATH:" != *":/usr/local/anyenv/bin:"* ]]; then
+  export PATH="/usr/local/anyenv/bin:$PATH"
+fi
 eval "$(anyenv init -)"
 EOS
-sudo /bin/bash -c "cat /tmp/.add_etc_profile >> ~/.bash_profile"
+/bin/bash -c "cat /tmp/.add_etc_profile >> ~/.bash_profile"
+/bin/bash /tmp/.add_etc_profile
+if [[ ":$PATH:" != *":/usr/local/anyenv/bin:"* ]]; then
+  export PATH="/usr/local/anyenv/bin:$PATH"
+fi
 anyenv install --init
 anyenv install nodenv
 anyenv install rbenv
@@ -40,6 +53,9 @@ sudo apt-get install -y google-chrome-stable
 sudo /bin/bash -c "echo 'git config --global credential.helper store' >> /etc/profile"
 
 # mysql
+if systemctl is-active --quiet mysql; then
+  sudo service mysql stop
+fi
 sudo apt-get install -y libmysqlclient-dev
 sudo apt-get install -y mysql-server
 sudo apt-get install -y mysql-client
