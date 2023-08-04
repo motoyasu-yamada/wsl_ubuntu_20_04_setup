@@ -1,14 +1,14 @@
 sudo apt-get -y update
-sudo apt-get install -y ruby
-
 sudo apt-get install -y apt-utils 
 sudo apt-get install -y build-essential
 sudo apt-get install -y git-core 
 sudo apt-get install -y vim
+sudo apt-get install -y wget ca-certificates
 
 # bundler
+sudo apt-get install -y ruby
 sudo apt-get install -y bundler
-sudo gem install bundler:2.1.4
+sudo gem install bundler:2.2.4 # https://bundler.io/
 
 # YARN
 sudo apt-get -y remove cmdtest
