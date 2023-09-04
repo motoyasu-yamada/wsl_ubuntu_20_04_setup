@@ -59,6 +59,7 @@ fi
 sudo apt-get install -y libmysqlclient-dev
 sudo apt-get install -y mysql-server
 sudo apt-get install -y mysql-client
+sudo apt-get install -y tzdata
 sudo usermod -d /var/lib/mysql mysql
 sudo service mysql start
 sudo mysql << EOS
