@@ -3,9 +3,9 @@ sudo add-apt-repository ppa:git-core/ppa
 sudo apt-get -y update
 sudo apt-get -y upgrade
 
-sudo apt-get install -y apt-utils 
+sudo apt-get install -y apt-utils
 sudo apt-get install -y build-essential
-sudo apt-get install -y git-core 
+sudo apt-get install -y git-core
 sudo apt-get install -y vim
 sudo apt-get install -y wget ca-certificates
 
@@ -19,7 +19,7 @@ sudo apt-get -y remove cmdtest
 sudo apt-get -y remove yarn
 sudo curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 sudo echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update 
+sudo apt-get update
 sudo apt-get -y install yarn
 
 # anyenv /rbenv nodenv
@@ -37,7 +37,7 @@ EOS
 /bin/bash -c "cat /tmp/.add_etc_profile >> ~/.bash_profile"
 /bin/bash /tmp/.add_etc_profile
 if [[ ":$PATH:" != *":/usr/local/anyenv/bin:"* ]]; then
-  export PATH="/usr/local/anyenv/bin:$PATH"
+    export PATH="/usr/local/anyenv/bin:$PATH"
 fi
 anyenv install --init
 anyenv install nodenv
@@ -54,7 +54,7 @@ sudo /bin/bash -c "echo 'git config --global credential.helper store' >> /etc/pr
 
 # mysql
 if systemctl is-active --quiet mysql; then
-  sudo service mysql stop
+    sudo service mysql stop
 fi
 sudo apt-get install -y libmysqlclient-dev
 sudo apt-get install -y mysql-server
@@ -73,3 +73,15 @@ sudo mysql_tzinfo_to_sql /usr/share/zoneinfo/ | sudo mysql -u root mysql
 # sqlite3
 sudo apt-get install -y sqlite3
 sudo apt-get install -y libsqlite3-dev
+
+# Docker
+# https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script
+curl -fsSL https://get.docker.com -o ~/get-docker.sh
+sudo sh ~/get-docker.sh
+sudo usermod -aG docker spicysoft
+
+# Docker-Compose
+# https://mabdullahabid.medium.com/docker-convenience-script-135146277323
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
