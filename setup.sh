@@ -11,6 +11,7 @@ sudo apt-get install -y wget ca-certificates
 
 # bundler
 sudo apt-get install -y libyaml-dev
+sudo apt-get install -y libmariadb-dev
 sudo apt-get install -y ruby
 sudo apt-get install -y bundler
 sudo gem install bundler:2.2.4 # https://bundler.io/
@@ -43,6 +44,9 @@ fi
 anyenv install --init
 anyenv install nodenv
 anyenv install rbenv
+
+sudo mkdir -p $(anyenv root)/plugins
+sudo git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
 
 # Google chrome
 sudo /bin/bash -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
@@ -112,3 +116,4 @@ curl http://localhost:9200/_nodes/plugins?pretty
 # nginxインストール
 sudo apt install -y nginx
 sudo service nginx start
+sudo adduser --system --no-create-home --shell /bin/false --group --disabled-login nginx
