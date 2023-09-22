@@ -10,6 +10,7 @@ sudo apt-get install -y vim
 sudo apt-get install -y wget ca-certificates
 
 # bundler
+sudo apt-get install -y libyaml-dev
 sudo apt-get install -y ruby
 sudo apt-get install -y bundler
 sudo gem install bundler:2.2.4 # https://bundler.io/
