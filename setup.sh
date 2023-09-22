@@ -86,3 +86,28 @@ sudo usermod -aG docker spicysoft
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
+
+# Elasticsearch
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
+curl -sS https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+sudo apt-get install apt-transport-https
+echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
+sudo apt-get update
+sudo apt-get install -y elasticsearch
+## 以下手作業
+# sudo vi /etc/elasticsearch/elasticsearch.yml
+# xpack.security.enabled: false
+# xpack.security.http.ssl.enabled: false
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable elasticsearch.service
+
+# kuromoji-tokenizer
+sudo systemctl stop elasticsearch.service
+sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
+sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-kuromoji
+sudo systemctl start elasticsearch.service
+curl http://localhost:9200/_nodes/plugins?pretty
+
+# nginxインストール
+sudo apt install -y nginx
+sudo service nginx start
