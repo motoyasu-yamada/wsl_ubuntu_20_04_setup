@@ -113,7 +113,15 @@ sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-kuromoji
 sudo systemctl start elasticsearch.service
 curl http://localhost:9200/_nodes/plugins?pretty
 
+# Kibana
+sudo apt-get install -y kibana
+sudo systemctl enable kibana
+sudo systemctl start kibana
+
 # nginxインストール
 sudo apt install -y nginx
 sudo service nginx start
 sudo adduser --system --no-create-home --shell /bin/false --group --disabled-login nginx
+
+# AWSツールのインストール
+sudo apt install -y awscli
