@@ -30,17 +30,13 @@ sudo rm -rf ~/.config/anyenv/
 sudo rm -rf /usr/local/anyenv
 sudo git clone https://github.com/riywo/anyenv ~/.anyenv
 sudo mv ~/.anyenv /usr/local/anyenv
-cat <<'EOS' > /tmp/.add_etc_profile
+cat <<'EOS' > /etc/profile/profile.d/anyenv.sh
 if [[ ":$PATH:" != *":/usr/local/anyenv/bin:"* ]]; then
   export PATH="/usr/local/anyenv/bin:$PATH"
 fi
 eval "$(anyenv init -)"
 EOS
-/bin/bash -c "cat /tmp/.add_etc_profile >> ~/.bash_profile"
-/bin/bash /tmp/.add_etc_profile
-if [[ ":$PATH:" != *":/usr/local/anyenv/bin:"* ]]; then
-    export PATH="/usr/local/anyenv/bin:$PATH"
-fi
+source /etc/profile
 anyenv install --init
 anyenv install nodenv
 anyenv install rbenv
@@ -121,7 +117,7 @@ sudo systemctl start kibana
 # nginxインストール
 sudo apt install -y nginx
 sudo service nginx start
-sudo adduser --system --no-create-home --shell /bin/false --group --disabled-login nginx
+sudo adduser --home /home/nginx --shell /bin/bash --group --disabled-login nginx
 
 # AWSツールのインストール
 sudo apt install -y awscli
