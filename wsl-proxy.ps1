@@ -1,7 +1,7 @@
 # Usage: .\wsl-proxy.ps1 80 3000 3001 9200 5601
 # Description: Forward ports from WSL2 to Windows
 if (-not $args) {
-  $ports = @(80, 3000, 3001, 3306, 9200, 5601) # Nginx, Rails, NextJs, MySQL, ElasticSearch, Kibana
+  $ports = @(22 80, 3000, 3001, 3306, 9200, 5601) # SSH, Nginx, Rails, NextJs, MySQL, ElasticSearch, Kibana
 } else {
   $ports = $args
 }
